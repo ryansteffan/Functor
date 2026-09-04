@@ -36,12 +36,12 @@ public class Exceptable<T>
         return new None();
     }
     
-    public Exceptable<T> Catch<TException>(Func<TException, Result<T, Exception>> handler) where TException : Exception
+    public Exceptable<T> Catch<TException>(Func<TException, T> handler) where TException : Exception
     {
         if (_InitialResult is Err<Exception> err && err.Error is TException ex)
         {
             var newResult = handler(ex);
-            return new Exceptable<T>(newResult);
+            return new Exceptable<T>(new Ok<T>(newResult));
         }
         return this;
     }
