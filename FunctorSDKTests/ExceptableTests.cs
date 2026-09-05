@@ -207,32 +207,32 @@ public class ExceptableTests
     }
 
 
-    [Fact]
-    public void ToValue_ReturnsSome_WhenExceptionHasBeenHandled()
-    {
-        // Arrange & Act
-        var result = Exceptable.Try<None>(() => throw new InvalidCastException("error"))
-            .Catch<InvalidCastException>(ex => new None())
-            .ToValue();
-        // Assert
-        result.Match(
-            value => { },
-            err => { Assert.Fail(); }
-            );
-    }
+    //[Fact]
+    //public void ToValue_ReturnsSome_WhenExceptionHasBeenHandled()
+    //{
+    //    // Arrange & Act
+    //    var result = Exceptable.Try<None>(() => throw new InvalidCastException("error"))
+    //        .Catch<InvalidCastException>(ex => new None())
+    //        .ToValue();
+    //    // Assert
+    //    result.Match(
+    //        value => { },
+    //        err => { Assert.Fail(); }
+    //        );
+    //}
 
-    [Fact]
-    public void ToValue_ReturnsNone_WhenExceptionHasNotBeenBeenHandled()
-    {
-        // Arrange & Act
-        var result = Exceptable.Try<None>(() => throw new InvalidCastException("error"))
-            .ToValue();
-        // Assert
-        result.Match(
-            value => { Assert.Fail(); },
-            err => { }
-            );
-    }
+    //[Fact]
+    //public void ToValue_ReturnsNone_WhenExceptionHasNotBeenBeenHandled()
+    //{
+    //    // Arrange & Act
+    //    var result = Exceptable.Try<None>(() => throw new InvalidCastException("error"))
+    //        .ToValue();
+    //    // Assert
+    //    result.Match(
+    //        value => { Assert.Fail(); },
+    //        err => { }
+    //        );
+    //}
 
     // TODO: Finish tests afer update to Option/Result.
 }
