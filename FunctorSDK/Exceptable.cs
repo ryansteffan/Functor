@@ -18,31 +18,35 @@ public class Exceptable<T>
 
     public bool IsOk => _InitialResult is Ok<T>;
     public bool IsErr => _InitialResult is Err<Exception>;
+
     public bool IsException<TException>() where TException : Exception
     {
-        if (_InitialResult is Err<Exception> err && err.Error is TException)
+        if (_InitialResult is Err<Exception> err && err.Value is TException)
         {
             return true;
         }
+
         return false;
     }
 
     public Option<TException> GetException<TException>() where TException : Exception
     {
-        if (_InitialResult is Err<Exception> err && err.Error is TException ex)
+        if (_InitialResult is Err<Exception> err && err.Value is TException ex)
         {
             return new Some<TException>(ex);
         }
+
         return new None();
     }
-    
+
     public Exceptable<T> Catch<TException>(Func<TException, T> handler) where TException : Exception
     {
-        if (_InitialResult is Err<Exception> err && err.Error is TException ex)
+        if (_InitialResult is Err<Exception> err && err.Value is TException ex)
         {
             var newResult = handler(ex);
             return new Exceptable<T>(new Ok<T>(newResult));
         }
+
         return this;
     }
 
@@ -72,7 +76,7 @@ public class Exceptable<T>
         return _InitialResult switch
         {
             Ok<T> ok => ok.Value,
-            Err<Exception> err => throw err.Error,
+            Err<Exception> err => throw err.Value,
         };
     }
 
